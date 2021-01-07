@@ -33,6 +33,9 @@ class Main {
     System.out.print("Enter Quantum Time: ");
     Quantum=scan.nextInt();
 
+    //Schedule for each technique
+    FCFS f=new FCFS(Processes);
+    f.Schedule();
   }
   
 }
