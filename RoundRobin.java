@@ -3,10 +3,10 @@ import java.util.*;
 public class RoundRobin{
 int ContextSwitching;
 int Quantum;
-ArrayList<Process> process=new ArrayList<Process>();
-RoundRobin(ArrayList<Process> P,int c,int Q)
+ArrayList<Process> process;
+RoundRobin(ArrayList<Process> p,int c,int Q)
 {
-process=P;
+process=new ArrayList<Process>(p);
 ContextSwitching=c;
 Quantum=Q;
 }

@@ -39,8 +39,8 @@ class Main {
     f.Schedule();
 
     System.out.println("In RR :---------------------------");
-    RoundRobin r=new RoundRobin(Processes,ContextSwitching,Quantum);
-    r.Schedule();
+   RoundRobin r=new RoundRobin(Processes, ContextSwitching,Quantum);
+   r.Schedule();
   }
   
 }

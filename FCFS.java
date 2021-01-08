@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class FCFS{
-    ArrayList<Process> process=new ArrayList<Process>();
+    ArrayList<Process> process;
 
   FCFS(ArrayList<Process> p){
-    process=p;
+    process=new ArrayList<Process>(p);
   }
 
   public void Schedule(){

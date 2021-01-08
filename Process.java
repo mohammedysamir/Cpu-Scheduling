@@ -1,4 +1,3 @@
-import java.util.*;
 public class Process{
 public String Name;
 public int ArrivalTime,BurstTime,Priority,QueueNumber;
