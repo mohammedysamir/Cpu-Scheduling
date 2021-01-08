@@ -33,9 +33,14 @@ class Main {
     System.out.print("Enter Quantum Time: ");
     Quantum=scan.nextInt();
 
+    System.out.println("In FCFS :---------------------------");
     //Schedule for each technique
     FCFS f=new FCFS(Processes);
     f.Schedule();
+
+    System.out.println("In RR :---------------------------");
+    RoundRobin r=new RoundRobin(Processes,ContextSwitching,Quantum);
+    r.Schedule();
   }
   
 }
