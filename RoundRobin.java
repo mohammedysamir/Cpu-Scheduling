@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 
 public class RoundRobin{
 int ContextSwitching;
@@ -47,7 +48,7 @@ public void Schedule()
      /*process.get(0).Turnaround=Counter-process.get(0).ArrivalTime;
      process.get(0).Waiting=process.get(0).Turnaround-process.get(0).BurstTime;
      */
-     temp.Turnaround=Counter-temp.ArrivalTime;
+     temp.Turnaround=Math.abs(Counter-temp.ArrivalTime);
      temp.Waiting=temp.Turnaround-temp.BurstTime;
      process.remove(0);
      Result.add(temp);
