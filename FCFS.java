@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 
 public class FCFS{
     ArrayList<Process> process;
@@ -19,7 +20,7 @@ public class FCFS{
         burst--;
       }
       //assign Turnaround time
-      process.get(index).Turnaround=counter-process.get(index).ArrivalTime;
+      process.get(index).Turnaround=Math.abs(counter-process.get(index).ArrivalTime);
       //assign Waiting time
       process.get(index).Waiting=process.get(index).Turnaround-process.get(index).BurstTime; 
       //Print data of Process

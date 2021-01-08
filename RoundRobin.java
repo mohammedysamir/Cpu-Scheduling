@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 
 public class RoundRobin{
 int ContextSwitching;
@@ -94,7 +95,6 @@ public void Schedule()
  minus--;
 
   }*/
-  //assign Turnaround
 }
 
   public void GetAvrg(ArrayList<Process> R){

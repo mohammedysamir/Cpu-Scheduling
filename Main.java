@@ -28,7 +28,7 @@ class Main {
     Process p=new Process(Name,Arrival,Burst,Priority,Queue_num);//create process
     Processes.add(p);//add process to arraylist
     }
-    System.out.print("Enter Context Switching time: ");
+    /*System.out.print("Enter Context Switching time: ");
     ContextSwitching=scan.nextInt();
     System.out.print("Enter Quantum Time: ");
     Quantum=scan.nextInt();
@@ -40,7 +40,11 @@ class Main {
 
     System.out.println("In RR :---------------------------");
    RoundRobin r=new RoundRobin(Processes, ContextSwitching,Quantum);
-   r.Schedule();
+   r.Schedule();*/
+
+  System.out.println("In Priority Queue :---------------------------");
+  PriorityQ p=new PriorityQ(Processes);
+  p.Schedule();
   }
   
 }
