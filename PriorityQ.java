@@ -26,9 +26,7 @@ public class PriorityQ {
         // Counter+=processes.get(index).BurstTime;
         Counter++;
         // decreament BurstTime of process
-        int Burst = BurstTimes.get(index);
-        Burst--;
-        BurstTimes.set(index, Burst);
+        BurstTimes.set(index, BurstTimes.get(index) - 1);
 
         if (BurstTimes.get(index) == 0) // remove if finished
         // calculate Trunaround and waiting
