@@ -18,7 +18,9 @@ public class PriorityQ
   int Counter=0;
   ArrayList<Process> Result=new ArrayList<Process>();
   while(processes.isEmpty()==false){
-  int index=get_minPriority();
+    //need to handle ArrivalTime 
+  int index=get_minPriority(Counter);
+  if(index != -1){
   Counter+=processes.get(index).BurstTime;
 
   processes.get(index).Turnaround=Math.abs(Counter-processes.get(index).ArrivalTime);
@@ -27,6 +29,10 @@ public class PriorityQ
   System.out.print(processes.get(index).Name+'|');
   Result.add(processes.get(index));
   processes.remove(index);
+  }else {
+    Counter++;
+    continue;
+  }
   }
   GetAvrg(Result);
   }
@@ -48,16 +54,20 @@ public class PriorityQ
   }
 
   //Get minimum Priority of all processes
-  int get_minPriority(){
+  int get_minPriority(int Timer){
     int min_index=0;
     int min_Priority=Integer.MAX_VALUE;
-
+    boolean Found=false;
     for(int i=0;i<processes.size();i++){
-      if(processes.get(i).Priority<=min_Priority){
+      //if process was in interval from 0 to Timer and has the lowest proiortiy set index to i
+      if(processes.get(i).Priority<=min_Priority &&processes.get(i).ArrivalTime <=Timer){
         min_Priority=processes.get(i).Priority;
         min_index=i;
+        Found=true;
       }
     }
-    return min_index;
+    if(Found)
+      return min_index;
+    else return -1;
   }
 }
