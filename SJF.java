@@ -1,50 +1,52 @@
 import java.util.*;
 
-public class SJF{
+public class SJF {
   int ContextSwitching;
   ArrayList<Process> processes;
-  ArrayList<Integer> BurstTimes=new ArrayList<Integer>();
+  ArrayList<Integer> BurstTimes = new ArrayList<Integer>();
 
-  SJF( ArrayList<Process> p , int C){
-    ContextSwitching=C;
-    processes=new ArrayList<Process> (p);
+  SJF(ArrayList<Process> p, int C) {
+    ContextSwitching = C;
+    processes = new ArrayList<Process>(p);
 
-    for(int i=0;i<processes.size();i++){ //copy Burst times of processes
+    for (int i = 0; i < processes.size(); i++) { // copy Burst times of processes
       BurstTimes.add(processes.get(i).BurstTime);
     }
   }
-  
-  public void Schedule(){
-     //to save result after assigning TA time and waiting time to get avg
-     ArrayList<Process> Result=new ArrayList<Process>(); 
-     int Counter=0; //Timer
-     int index=0; //refer to index of process
-     while(!processes.isEmpty()){
-       index=get_minArrival(Counter);
-       if(index != -1){
 
-        System.out.print(processes.get(index).Name + '|');// print name of new process after switch
-        // Counter+=processes.get(index).BurstTime;
+  public void Schedule() {
+    int FinishedProcesses = 0; // counter for number of finished processes
+    int Counter = 0;
+    int current_index = 0;
+    int prv_index = 0;
+    while (FinishedProcesses < processes.size()) {
+      current_index = get_minArrival(Counter, BurstTimes);
+      if (current_index != -1) {
+        if (prv_index != current_index) {
+          System.out.print(processes.get(current_index).Name + '|');// print name of new process after switch
+          // solve starvation problem
+          Counter += ContextSwitching;
+        }
         Counter++;
         // decreament BurstTime of process
-        BurstTimes.set(index, BurstTimes.get(index) -1 );
+        BurstTimes.set(current_index, BurstTimes.get(current_index) - 1);
 
-        if (BurstTimes.get(index) == 0) // remove if finished
-        // calculate Trunaround and waiting
+        if (BurstTimes.get(current_index) == 0) // remove if finished
         {
-          processes.get(index).Turnaround = Math.abs(Counter - processes.get(index).ArrivalTime);
-          processes.get(index).Waiting = processes.get(index).Turnaround - processes.get(index).BurstTime;
-          Result.add(processes.get(index));
-          processes.remove(index);
-          BurstTimes.remove(index);
+          // calculate Trunaround and waiting
+          processes.get(current_index).Turnaround = Math.abs(Counter - processes.get(current_index).ArrivalTime);
+          processes.get(current_index).Waiting = processes.get(current_index).Turnaround
+              - processes.get(current_index).BurstTime;
+          FinishedProcesses++;
         }
-       }
-       else{
-         Counter++;
-         continue;
-       }
-     }
-     GetAvrg(Result);
+      } else {
+        Counter++;
+        continue;
+      }
+      prv_index = current_index;
+    }
+    System.out.print(processes.get(current_index).Name);// print name of last process executed
+    GetAvrg(processes);
   }
 
   public void GetAvrg(ArrayList<Process> R) {
@@ -63,14 +65,14 @@ public class SJF{
   }
 
   // Get minimum Arrival of all processes
-  int get_minArrival(int Timer) {
+  int get_minArrival(int Timer, ArrayList<Integer> Bursts) {
     int min_index = 0;
     int min_Arrival = Integer.MAX_VALUE;
     boolean Found = false;
     for (int i = 0; i < processes.size(); i++) {
       // if process was in interval from 0 to Timer and has the lowest proiortiy set
       // index to i
-      if (processes.get(i).ArrivalTime <= min_Arrival && processes.get(i).ArrivalTime <= Timer) {
+      if (processes.get(i).ArrivalTime <= min_Arrival && processes.get(i).ArrivalTime <= Timer && Bursts.get(i) > 0) {
         min_Arrival = processes.get(i).ArrivalTime;
         min_index = i;
         Found = true;
