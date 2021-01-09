@@ -1,10 +1,12 @@
 import java.util.*;
-import java.lang.*;
 public class PriorityQ
 {
   ArrayList<Process> processes;
+  ArrayList<Integer> BurstTimes=new ArrayList<Integer>() ; //Burst times of processes
   PriorityQ(ArrayList<Process> p){
     processes=new ArrayList<Process>(p);
+    for(int i=0;i<p.size();i++)
+      BurstTimes.add(processes.get(i).BurstTime);
   }
   /*
   1. get minimum Priority
@@ -17,18 +19,26 @@ public class PriorityQ
   public void Schedule(){
   int Counter=0;
   ArrayList<Process> Result=new ArrayList<Process>();
-  while(processes.isEmpty()==false){
+  while(!processes.isEmpty()){
     //need to handle ArrivalTime 
   int index=get_minPriority(Counter);
-  if(index != -1){
-  Counter+=processes.get(index).BurstTime;
+  if(index != -1 ){
+  //Counter+=processes.get(index).BurstTime;
+    Counter++;
+  //decreament BurstTime of process
+    int Burst=BurstTimes.get(index);
+    //BurstTimes.remove(index);
+    Burst--;
+    BurstTimes.set(index,Burst);
 
   processes.get(index).Turnaround=Math.abs(Counter-processes.get(index).ArrivalTime);
   processes.get(index).Waiting=processes.get(index).Turnaround-processes.get(index).BurstTime;
 
   System.out.print(processes.get(index).Name+'|');
   Result.add(processes.get(index));
-  processes.remove(index);
+
+  if(BurstTimes.get(index)==0)  //remove if finished
+    processes.remove(index);
   }else {
     Counter++;
     continue;
