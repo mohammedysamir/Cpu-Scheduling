@@ -17,5 +17,8 @@ public void ShowInfo(){
   //print info of process
   System.out.println("Name: "+Name+" Arrival: "+ArrivalTime+" Burst: "+BurstTime+" TurnAround: "+Turnaround+" Wating: "+Waiting);
 }
+public void setPriority(int newPriority){
+  Priority=newPriority;
+}
 
 }
