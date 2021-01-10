@@ -88,7 +88,7 @@ public class PriorityQ {
     for (int i = 0; i < processes.size(); i++) {
       // if process was in interval from 0 to Timer and has the lowest proiortiy set
       // index to i
-      if (processes.get(i).Priority <= min_Priority && processes.get(i).ArrivalTime <= Timer && Bursts.get(i) > 0) {
+      if (processes.get(i).Priority < min_Priority && processes.get(i).ArrivalTime <= Timer && Bursts.get(i) > 0) {
         min_Priority = processes.get(i).Priority;
         min_index = i;
         Found = true;
