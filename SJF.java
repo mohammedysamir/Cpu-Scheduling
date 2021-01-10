@@ -46,6 +46,15 @@ public class SJF {
       prv_index = current_index;
     }
     System.out.println(processes.get(current_index).Name);// print name of last process executed
+    //Show info of each process
+    System.out.println("Process Name"+"     "+"ArrivalTime"+"     "+"BurstTime"+"     "+"Priority"+"      "+"Queue_Number"+"      "
+    +"TurnAround Time"+"      "+"Waiting Time");
+    for(int i=0;i<processes.size();i++){
+      System.out.println(processes.get(i).Name+"                    "+processes.get(i).ArrivalTime+"              "+
+      processes.get(i).BurstTime+"           "+processes.get(i).Priority+"               "+
+      processes.get(i).QueueNumber+"                "+processes.get(i).Turnaround+
+      "                       "+processes.get(i).Waiting);
+    }
     GetAvrg(processes);
   }
 
