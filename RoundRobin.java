@@ -4,60 +4,55 @@ public class RoundRobin {
   int ContextSwitching;
   int Quantum;
   ArrayList<Process> processes;
+  ArrayList<Integer> BurstTimes = new ArrayList<Integer>();
 
   RoundRobin(ArrayList<Process> p, int c, int Q) {
     processes = new ArrayList<Process>(p);
     ContextSwitching = c;
     Quantum = Q;
+    for (int i = 0; i < processes.size(); i++)
+      BurstTimes.add(processes.get(i).BurstTime); // adding bursttimes of each processes to BurstTimes
   }
 
   public void Schedule() {
-    /*
-     * 1. we work on First index of ArrayList 2. if ArrayList.isEmpty() ===>work is
-     * done 3. else process.get(0).BurstTime-=Quantum;
-     * Sysout(process.get(0)->Name+'|') if(process.get(0)->BurstTime > 0) 1.remove
-     * 2.add else{ 1.remove only }
-     * 
-     */
-    ArrayList<Process> Result = new ArrayList<Process>();
-    ArrayList<Integer> BurstTimes = new ArrayList<Integer>();
-    for (int i = 0; i < processes.size(); i++)
-      BurstTimes.add(processes.get(i).BurstTime); // adding bursttimes of each processes to BurstTimes
-
     int Counter = 0; // counting time for the system
     int FinishedProcesses = 0;
     int index = -1; // index of processes
-    int Size;
+    int Size = processes.size();
     while (FinishedProcesses < processes.size()) {
-      Size = processes.size();
-      index = (index + 1) % Size; // circular
-      if (processes.get(index).ArrivalTime <= Counter && BurstTimes.get(index) > 0) { // arrived process and has some
-                                                                                      // work to do
-        BurstTimes.set(index, BurstTimes.get(index) - Quantum);
-      } else {
-        Counter++;
-        continue;
-      }
-      System.out.print(processes.get(index).Name + '|');// Print order of execution
-      Counter += Quantum + ContextSwitching;
-      if (BurstTimes.get(index) <= 0) {
-        // Process finished work
-        FinishedProcesses++;
-        processes.get(index).Turnaround = Counter - processes.get(index).ArrivalTime;
-        processes.get(index).Waiting = processes.get(index).Turnaround - processes.get(index).BurstTime;
-      }
+      if (processes.get((index + 1) % Size).BurstTime == 0) {
+        while (processes.get((index + 1) % Size).BurstTime == 0) {
+          index = (index + 1) % Size; // circular
+        }
+      } else
+        index = (index + 1) % Size;
+    if (processes.get(index).ArrivalTime <= Counter && BurstTimes.get(index) > 0) { // arrived process and has some
+                                                                                    // work to do
+      BurstTimes.set(index, BurstTimes.get(index) - Quantum);
+    } else {
+      Counter++;
+      continue;
     }
-    System.out.println("\n");
-    System.out.println("Process Name" + "     " + "ArrivalTime" + "     " + "BurstTime" + "     " + "Priority"
-        + "      " + "Queue_Number" + "      " + "TurnAround Time" + "      " + "Waiting Time");
-    for (int i = 0; i < processes.size(); i++) {
-      System.out.println(processes.get(i).Name + "                    " + processes.get(i).ArrivalTime
-          + "              " + processes.get(i).BurstTime + "           " + processes.get(i).Priority
-          + "               " + processes.get(i).QueueNumber + "                " + processes.get(i).Turnaround
-          + "                       " + processes.get(i).Waiting);
+    System.out.print(processes.get(index).Name + '|');// Print order of execution
+    Counter += Quantum;
+    if (BurstTimes.get(index) <= 0) {
+      // Process finished work
+      FinishedProcesses++;
+      processes.get(index).Turnaround = Counter - processes.get(index).ArrivalTime;
+      processes.get(index).Waiting = processes.get(index).Turnaround - processes.get(index).BurstTime;
     }
+    Counter += ContextSwitching;
+  }System.out.println("\n");System.out.println("Process Name"+"     "+"ArrivalTime"+"     "+"BurstTime"+"     "+"Priority"+"      "+"Queue_Number"+"      "+"TurnAround Time"+"      "+"Waiting Time"+"      "+"Quantum"+"       "+"Context");for(
 
-    GetAvrg(processes);
+  int i = 0;i<processes.size();i++)
+  {
+    System.out.println(processes.get(i).Name + "                    " + processes.get(i).ArrivalTime + "              "
+        + processes.get(i).BurstTime + "           " + processes.get(i).Priority + "               "
+        + processes.get(i).QueueNumber + "                " + processes.get(i).Turnaround + "                     "
+        + processes.get(i).Waiting + "              " + Quantum + "            " + ContextSwitching);
+  }
+
+  GetAvrg(processes);
   }
 
   public void GetAvrg(ArrayList<Process> R) {
