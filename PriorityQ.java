@@ -51,7 +51,7 @@ public class PriorityQ {
       prv_index = current_index;
     }
     // print last process executed
-    System.out.print(processes.get(prv_index).Name);
+    System.out.println(processes.get(prv_index).Name);
     GetAvrg(processes);
 
   }

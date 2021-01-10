@@ -33,6 +33,10 @@ class Main {
     System.out.print("Enter Quantum Time: ");
     Quantum = scan.nextInt();
 
+    System.out.println("In SRTF Queue :---------------------------");
+    SJF sjf = new SJF(Processes,ContextSwitching);
+    sjf.Schedule();
+
     System.out.println("In FCFS :---------------------------");
     FCFS f = new FCFS(Processes);
     f.Schedule();

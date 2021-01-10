@@ -23,7 +23,7 @@ public class SJF {
       current_index = get_minArrival(Counter, BurstTimes);
       if (current_index != -1) {
         if (prv_index != current_index) {
-          System.out.print(processes.get(current_index).Name + '|');// print name of new process after switch
+          System.out.print(processes.get(prv_index).Name + '|');// print name of new process after switch
           // solve starvation problem
           Counter += ContextSwitching;
         }
@@ -45,7 +45,7 @@ public class SJF {
       }
       prv_index = current_index;
     }
-    System.out.print(processes.get(current_index).Name);// print name of last process executed
+    System.out.println(processes.get(current_index).Name);// print name of last process executed
     GetAvrg(processes);
   }
 
@@ -72,7 +72,9 @@ public class SJF {
     for (int i = 0; i < processes.size(); i++) {
       // if process was in interval from 0 to Timer and has the lowest proiortiy set
       // index to i
-      if (processes.get(i).ArrivalTime <= min_Arrival && processes.get(i).ArrivalTime <= Timer && Bursts.get(i) > 0) {
+      if (processes.get(i).ArrivalTime <= min_Arrival 
+      && processes.get(i).ArrivalTime <= Timer 
+      && Bursts.get(i) > 0) {
         min_Arrival = processes.get(i).ArrivalTime;
         min_index = i;
         Found = true;
