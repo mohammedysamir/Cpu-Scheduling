@@ -27,9 +27,9 @@ public class SJF {
           // solve starvation problem
           Counter += ContextSwitching;
         }
-        Counter++;
         // decreament BurstTime of process
         BurstTimes.set(current_index, BurstTimes.get(current_index) - 1);
+        Counter++;
 
         if (BurstTimes.get(current_index) == 0) // remove if finished
         {
@@ -76,16 +76,16 @@ public class SJF {
   // Get minimum Arrival of all processes
   int get_minArrival(int Timer, ArrayList<Integer> Bursts) {
     int min_index = 0;
-    int min_Arrival = Integer.MAX_VALUE;
+    int min_Burst=Integer.MAX_VALUE;
     boolean Found = false;
     for (int i = 0; i < processes.size(); i++) {
       // if process was in interval from 0 to Timer and has the lowest proiortiy set
       // index to i
-      if (processes.get(i).ArrivalTime <= min_Arrival 
-      && processes.get(i).ArrivalTime <= Timer 
-      && Bursts.get(i) > 0) {
-        min_Arrival = processes.get(i).ArrivalTime;
+      if (processes.get(i).ArrivalTime <= Timer 
+      && Bursts.get(i) > 0
+      &&Bursts.get(i) <min_Burst) {
         min_index = i;
+        min_Burst=Bursts.get(i);
         Found = true;
       }
     }
