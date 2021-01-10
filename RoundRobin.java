@@ -5,6 +5,8 @@ public class RoundRobin {
   int Quantum;
   ArrayList<Process> processes;
   ArrayList<Integer> BurstTimes = new ArrayList<Integer>();
+  float TurnaroundAvg ;
+  float WaitingAvg; 
 
   RoundRobin(ArrayList<Process> p, int c, int Q) {
     processes = new ArrayList<Process>(p);
@@ -12,6 +14,8 @@ public class RoundRobin {
     Quantum = Q;
     for (int i = 0; i < processes.size(); i++)
       BurstTimes.add(processes.get(i).BurstTime); // adding bursttimes of each processes to BurstTimes
+    TurnaroundAvg = 0.0f;
+    WaitingAvg = 0.0f;
   }
 
   public void Schedule() {
@@ -63,10 +67,16 @@ public class RoundRobin {
       totalWaiting += R.get(i).Waiting;
     }
 
-    float TurnaroundAvg = totalTurnarround / (float) R.size();
-    float WaitingAvg = totalWaiting / (float) R.size();
+    TurnaroundAvg = totalTurnarround / (float) R.size();
+    WaitingAvg = totalWaiting / (float) R.size();
 
     System.out.println(
         "in RoundRobin, Average Turn Arround Time: " + TurnaroundAvg + " " + "Average Waiting Time: " + WaitingAvg);
+  }
+  public float Get_TAavg(){
+    return TurnaroundAvg;
+  }
+  public float Get_Waitingavg(){
+    return WaitingAvg;
   }
 }

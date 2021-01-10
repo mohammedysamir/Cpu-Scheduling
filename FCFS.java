@@ -3,10 +3,14 @@ import java.util.*;
 public class FCFS {
   ArrayList<Process> processes;
   ArrayList<Integer>BurstTimes=new ArrayList<Integer>();
+  float TurnaroundAvg ;
+  float WaitingAvg; 
   FCFS(ArrayList<Process> p) {
     processes = new ArrayList<Process>(p);
     for(int i=0;i<processes.size();i++)
       BurstTimes.add(processes.get(i).BurstTime);
+      TurnaroundAvg = 0.0f;
+      WaitingAvg = 0.0f;
   }
 
   public void Schedule() {
@@ -15,6 +19,10 @@ public class FCFS {
     // create Result ArrayList to store result
     while (FinishedProcesses < processes.size()) {
       int index = get_minArrival(counter);
+      if(index == -1 ){
+        counter++;
+        continue;
+      }
       //int burst = processes.get(index).BurstTime;
       while (BurstTimes.get(index) > 0) {// having some time to do process
         counter++;
@@ -38,15 +46,15 @@ public class FCFS {
   }
 
   public void GetAvrg(ArrayList<Process> R) {
-    float totalTurnarround = 0.0f;
-    float totalWaiting = 0.0f;
+    float totalTurnarround=0.0f;
+    float totalWaiting=0.0f ;
     for (int i = 0; i < R.size(); i++) {
       totalTurnarround += R.get(i).Turnaround;
       totalWaiting += R.get(i).Waiting;
     }
 
-    float TurnaroundAvg = totalTurnarround / (float) R.size();
-    float WaitingAvg = totalWaiting / (float) R.size();
+    TurnaroundAvg = totalTurnarround / (float) R.size();
+    WaitingAvg = totalWaiting / (float) R.size();
 
     System.out.println("in First-Come-First-Served, Average Turn Arround Time: " + TurnaroundAvg + " "
         + "Average Waiting Time: " + WaitingAvg);
@@ -72,4 +80,10 @@ public class FCFS {
     return -1;
   }
   
+  public float Get_TAavg(){
+    return TurnaroundAvg;
+  }
+  public float Get_Waitingavg(){
+    return WaitingAvg;
+  }
 }

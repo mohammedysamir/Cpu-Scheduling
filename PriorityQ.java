@@ -3,11 +3,14 @@ import java.util.*;
 public class PriorityQ {
   ArrayList<Process> processes;
   ArrayList<Integer> BurstTimes = new ArrayList<Integer>(); // Burst times of processes
-
+  float TurnaroundAvg ;
+  float WaitingAvg; 
   PriorityQ(ArrayList<Process> p) {
     processes = new ArrayList<Process>(p);
     for (int i = 0; i < p.size(); i++)
       BurstTimes.add(processes.get(i).BurstTime);
+      TurnaroundAvg=0.0f ;
+      WaitingAvg=0.0f; 
   }
 
   /*
@@ -73,8 +76,8 @@ public class PriorityQ {
       totalWaiting += R.get(i).Waiting;
     }
 
-    float TurnaroundAvg = totalTurnarround / (float) R.size();
-    float WaitingAvg = totalWaiting / (float) R.size();
+   TurnaroundAvg = totalTurnarround / (float) R.size();
+   WaitingAvg = totalWaiting / (float) R.size();
 
     System.out.println(
         "in Priority, Average Turn Arround Time: " + TurnaroundAvg + " " + "Average Waiting Time: " + WaitingAvg);
@@ -98,5 +101,12 @@ public class PriorityQ {
       return min_index;
     else
       return -1;
+  }
+
+  public float Get_TAavg(){
+    return TurnaroundAvg;
+  }
+  public float Get_Waitingavg(){
+    return WaitingAvg;
   }
 }

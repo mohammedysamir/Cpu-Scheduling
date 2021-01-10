@@ -4,11 +4,14 @@ public class SJF {
   int ContextSwitching;
   ArrayList<Process> processes;
   ArrayList<Integer> BurstTimes = new ArrayList<Integer>();
+  float TurnaroundAvg ;
+  float WaitingAvg; 
 
   SJF(ArrayList<Process> p, int C) {
     ContextSwitching = C;
     processes = new ArrayList<Process>(p);
-
+    TurnaroundAvg = 0.0f;
+    WaitingAvg = 0.0f;
     for (int i = 0; i < processes.size(); i++) { // copy Burst times of processes
       BurstTimes.add(processes.get(i).BurstTime);
     }
@@ -93,6 +96,13 @@ public class SJF {
       return min_index;
     else
       return -1;
+  }
+
+  public float Get_TAavg(){
+    return TurnaroundAvg;
+  }
+  public float Get_Waitingavg(){
+    return WaitingAvg;
   }
 
 }

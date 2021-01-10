@@ -53,21 +53,16 @@ class Main {
         System.out.println("In Priority Queue :---------------------------");
         PriorityQ p = new PriorityQ(Processes);
         p.Schedule();
-
         break;
       case 4:
-        break;
+       System.out.println("In Multi_Level Queue :---------------------------");
+       MultilvlQ mq=new MultilvlQ(Quantum,Processes);
+       mq.Schedule();
+       break;
       default:
       System.out.println("Not a available choice");
       break;
     }
-
-    /*
-     * System.out.println("In FCFS :---------------------------"); 
-     * FCFS f = new
-     * FCFS(Processes); f.Schedule();
-     * 
-     */
     scan.nextLine();
     String answer;
     System.out.println("do you want to continue with another algorithm");
